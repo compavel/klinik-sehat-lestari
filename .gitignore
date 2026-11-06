@@ -1,0 +1,13 @@
+﻿# Hasil sementara proses QA
+docs/screenshots/_tmp-*
+
+# Sampah OS dan editor
+Thumbs.db
+desktop.ini
+.DS_Store
+*.log
+
+# Kalau nanti ditambah tooling
+node_modules/
+vendor/
+.env
