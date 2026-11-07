@@ -195,4 +195,98 @@
       if (panel) panel.hidden = terbuka;
     });
   });
+
+  /* ----------------------------------------------------------------------
+     5. Dialog demo WhatsApp
+     Nomor WhatsApp di situs ini fiktif. Kalau link wa.me nomor demo
+     diklik, browser bisa menyerahkan tab ke aplikasi WhatsApp lalu
+     meninggalkan halaman kosong. Dialog ini menjelaskan situasinya dan
+     tetap menyediakan tautan keluar kalau pengunjung ingin mencoba.
+     ---------------------------------------------------------------------- */
+  var NOMOR_WA_DEMO = "6281234567890";
+  var dialogWa = null;
+
+  function buatDialogWa() {
+    if (!("showModal" in document.createElement("dialog"))) return null;
+
+    var dialog = document.createElement("dialog");
+    dialog.className = "wa-demo";
+    dialog.setAttribute("aria-labelledby", "wa-demo-judul");
+    dialog.setAttribute("aria-describedby", "wa-demo-deskripsi");
+    dialog.innerHTML =
+      '<div class="wa-demo__body">' +
+        '<p class="wa-demo__eyebrow">Mode demo</p>' +
+        '<h2 class="wa-demo__title" id="wa-demo-judul">WhatsApp belum tersambung</h2>' +
+        '<p class="wa-demo__text" id="wa-demo-deskripsi">Nomor 0812-3456-7890 di situs ini fiktif, jadi pesan tidak akan sampai ke klinik. Di versi produksi, tombol ini langsung membuka WhatsApp dengan pesan yang sudah terisi.</p>' +
+        '<p class="wa-demo__label">Pesan yang akan terisi</p>' +
+        '<p class="wa-demo__message" data-wa-message></p>' +
+        '<div class="wa-demo__actions">' +
+          '<button class="btn btn--ghost" type="button" data-wa-close>Tutup</button>' +
+          '<a class="btn btn--wa" data-wa-continue href="#" target="_blank" rel="noopener noreferrer">Buka WhatsApp (demo)</a>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(dialog);
+
+    dialog.querySelector("[data-wa-close]").addEventListener("click", function () {
+      dialog.close();
+    });
+
+    dialog.addEventListener("click", function (e) {
+      if (e.target !== dialog) return;
+      var kotak = dialog.getBoundingClientRect();
+      var diLuar =
+        e.clientX < kotak.left ||
+        e.clientX > kotak.right ||
+        e.clientY < kotak.top ||
+        e.clientY > kotak.bottom;
+      if (diLuar) dialog.close();
+    });
+
+    dialog.addEventListener("close", function () {
+      document.documentElement.classList.remove("is-dialog-open");
+    });
+
+    return dialog;
+  }
+
+  function nomorWaDemo(href) {
+    try {
+      var url = new URL(href);
+      if (url.hostname !== "wa.me" && url.hostname !== "www.wa.me") return false;
+      return url.pathname.replace(/\D/g, "") === NOMOR_WA_DEMO;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  document.addEventListener("click", function (e) {
+    var link = e.target.closest('a[href*="wa.me/"]');
+    if (!link) return;
+
+    /* Tautan di dalam dialog dibiarkan membuka WhatsApp seperti biasa. */
+    if (link.closest(".wa-demo")) {
+      if (dialogWa) dialogWa.close();
+      return;
+    }
+
+    if (!nomorWaDemo(link.href)) return;
+    if (!dialogWa) dialogWa = buatDialogWa();
+    if (!dialogWa) return;
+
+    e.preventDefault();
+
+    var pesan = "";
+    try {
+      pesan = new URL(link.href).searchParams.get("text") || "";
+    } catch (err) {
+      pesan = "";
+    }
+
+    dialogWa.querySelector("[data-wa-message]").textContent = pesan;
+    dialogWa.querySelector("[data-wa-continue]").href = link.href;
+    document.documentElement.classList.add("is-dialog-open");
+    if (!dialogWa.open) dialogWa.showModal();
+    dialogWa.querySelector("[data-wa-close]").focus();
+  });
 })();
