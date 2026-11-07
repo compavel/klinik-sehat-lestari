@@ -103,6 +103,7 @@ Klinik kecil biasanya memang bekerja lewat WhatsApp. Karena itu WhatsApp diperla
 - **Mobile:** action bar sticky di bawah berisi Telepon dan Chat WhatsApp. Ini selalu terlihat tanpa harus scroll ke atas.
 - **Desktop:** floating button di kanan bawah, karena action bar bawah terasa aneh di layar lebar.
 - **Pesan otomatis:** setiap tombol mengirim konteks yang berbeda. Tombol di kartu dokter mengisi nama dokter dan poli; tombol di halaman layanan mengisi nama layanan. Petugas tidak perlu bertanya “mau tanya apa?”.
+- **Mode demo:** nomor WhatsApp di situs ini fiktif. Tautan `wa.me` dengan nomor demo dicegat dan ditampilkan dialog yang menjelaskan situasinya, memperlihatkan pesan yang akan terisi, dan menyediakan tombol keluar ke WhatsApp di tab baru. Ini juga mencegah tab kosong saat browser menyerahkan URL ke aplikasi WhatsApp Desktop. Kalau nomor diganti dengan nomor asli, dialog tidak muncul dan tautan berjalan normal.
 - **Tidak memakai widget chat pihak ketiga:** berat, menambah request, dan biasanya memasang cookie/tracking. Untuk mockup statis, tautan `wa.me` sudah cukup.
 
 Trade-off: floating button bisa menutupi konten di pojok kanan bawah. Body diberi padding bawah di mobile supaya konten terakhir tidak tertutup action bar. Untuk screenshot, elemen sticky disembunyikan agar tidak menjadi artefak.

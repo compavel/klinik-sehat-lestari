@@ -109,7 +109,7 @@ Lima dokter demo:
 | dr. Cahya Wulandari, Sp.A | Anak | Selasa & Kamis 16.00–20.00, Sabtu 09.00–13.00 |
 | dr. Endah Kusumastuti, Sp.PK | Laboratorium | Senin–Jumat 07.00–12.00 |
 
-Kalau data ini dipakai untuk klinik sungguhan, ganti nama, nomor, alamat, koordinat, dan jadwal terlebih dahulu.
+Kalau data ini dipakai untuk klinik sungguhan, ganti nama, nomor, alamat, koordinat, dan jadwal terlebih dahulu. Konstanta `NOMOR_WA_DEMO` di `js/main.js` juga perlu disesuaikan supaya dialog demo tidak lagi muncul untuk nomor baru.
 
 ## Keputusan desain
 
@@ -175,6 +175,7 @@ Full-page:
 
 - Semua data fiktif; tidak ada integrasi dengan sistem klinik.
 - Tidak ada form booking, database, atau panel admin. Aksi utama diarahkan ke WhatsApp.
+- Nomor WhatsApp fiktif. Supaya klik CTA tidak berakhir di layar kosong akibat handoff ke aplikasi WhatsApp, tautan nomor demo dicegat dan ditampilkan dialog penjelasan. Tautan `wa.me` tetap bisa dibuka dari dialog. Kalau nomor diganti dengan nomor asli, dialog tidak muncul dan tautan membuka WhatsApp di tab baru.
 - Peta berupa gambar statis. Untuk melihat sekitar, pengguna membuka OpenStreetMap.
 - Status buka memakai jam perangkat pengunjung, bukan zona waktu Asia/Jakarta. Untuk pengunjung di luar WIB, status bisa berbeda dari jam klinik.
 - Font diambil dari Google Fonts. Kalau koneksi ke Google diblokir, tampilan memakai font sistem.
