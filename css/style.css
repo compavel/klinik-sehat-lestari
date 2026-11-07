@@ -458,6 +458,69 @@ li { list-style: none; }
   line-height: 1.5;
 }
 
+/* Dialog demo WhatsApp */
+.wa-demo {
+  width: min(92vw, 30rem);
+  max-width: 30rem;
+  max-height: 90vh;
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--body);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  box-shadow: 0 24px 64px rgba(18, 49, 46, .24);
+}
+.wa-demo::backdrop { background: rgba(18, 49, 46, .55); }
+.wa-demo__body { padding: 1.5rem; }
+.wa-demo__eyebrow {
+  margin: 0 0 .25rem;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--tosca-600);
+}
+.wa-demo__title { margin: 0 0 .5rem; font-size: 1.375rem; }
+.wa-demo__text { margin: 0 0 1.25rem; font-size: .9375rem; }
+.wa-demo__label {
+  margin: 0 0 .375rem;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.wa-demo__message {
+  margin: 0;
+  padding: .875rem 1rem;
+  background: var(--tosca-50);
+  border-left: 3px solid var(--tosca-500);
+  border-radius: 0 var(--radius-tile) var(--radius-tile) 0;
+  color: var(--ink);
+  font-size: .9375rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+.wa-demo__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+.wa-demo__actions .btn { flex: 1 1 auto; }
+html.is-dialog-open { overflow: hidden; }
+
+@media (max-width: 420px) {
+  .wa-demo__body { padding: 1.25rem; }
+  .wa-demo__actions { flex-direction: column; }
+  .wa-demo__actions .btn { width: 100%; }
+}
+
 /* --------------------------------------------------------------------------
    4. Tata letak
    -------------------------------------------------------------------------- */
