@@ -11,3 +11,7 @@ desktop.ini
 node_modules/
 vendor/
 .env
+dist/
+
+# Local Netlify folder
+.netlify

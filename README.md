@@ -4,7 +4,9 @@ Mockup website untuk klinik keluarga fiktif di Beji, Depok. Dibuat sebagai studi
 
 > **Data demo.** Klinik, dokter, jadwal, alamat, nomor telepon, dan peta adalah fiktif. Website ini bukan layanan kesehatan sungguhan.
 
-**Status:** selesai untuk scope mockup. Belum di-deploy. Tidak ada backend, form booking, atau data pasien.
+**Status:** selesai dan live di Netlify. Tidak ada backend, form booking, atau data pasien.
+
+**Live demo:** <https://klinik-sehat-lestari.netlify.app>
 
 ## Masalah yang diselesaikan
 
@@ -87,6 +89,21 @@ Lalu buka `http://localhost:8000`.
 
 Membuka `index.html` langsung dari file manager juga bisa, tetapi static server lebih mendekati kondisi produksi.
 
+## Deployment
+
+Demo produksi: <https://klinik-sehat-lestari.netlify.app> — Netlify, HTTPS otomatis, tanpa build step.
+
+Kalau perlu deploy ulang, buat folder publish bersih supaya `.git/` dan screenshot untuk QA di `docs/` tidak ikut terunggah:
+
+```bash
+mkdir -p dist
+cp *.html robots.txt dist/
+cp -r css js assets dist/
+netlify deploy --prod --dir=dist --site 480539a3-9751-458d-a248-89515d98fba3
+```
+
+`dist/` sudah masuk `.gitignore`.
+
 ## Data demo
 
 | Data | Nilai |
@@ -141,13 +158,13 @@ Diuji dengan Chrome desktop 1280 px dan mobile 390 px (headless Chrome via CDP, 
 - Tanpa JavaScript: navigasi dan jadwal mingguan tetap terbaca; kartu status diganti fallback.
 - Kontras teks: ink 13,96:1, body 7,90:1, muted 5,07:1, tosca-600 6,13:1, tosca-700 7,75:1, WhatsApp 6,50:1.
 - Lighthouse (Chrome) di enam halaman: Accessibility 100, Best Practices 100, SEO 100. Kategori Performance tidak tersedia di runner yang dipakai, jadi belum ada skor performa.
+- Live Netlify: tujuh halaman balas 200, CSS/JS/peta termuat, dan dialog demo WhatsApp berfungsi.
 
 Belum diuji:
 
 - Safari, Firefox, dan perangkat fisik.
 - Screen reader sungguhan (NVDA/VoiceOver).
 - Belum ada automated test suite; pengecekan di atas dilakukan lewat skrip QA sementara dan inspeksi visual.
-- Belum di-deploy.
 
 ## Screenshot
 
@@ -185,12 +202,10 @@ Full-page:
 
 ## Rencana berikutnya
 
-1. Deploy demo ke Netlify setelah disetujui.
-2. Ganti data demo dengan data klinik sungguhan dan foto asli.
-3. Kalau scope bertambah, buat form booking sederhana dengan Laravel + MySQL; jangan paksakan backend kalau kebutuhan utama masih WhatsApp.
-4. Hitung status buka memakai zona waktu Asia/Jakarta.
-5. Tambahkan pengecekan otomatis: Lighthouse, axe, dan smoke test Playwright.
-6. Masukkan studi kasus ini ke portfolio beserta proses desain dan screenshot final.
+1. Ganti data demo dengan data klinik sungguhan dan foto asli.
+2. Kalau scope bertambah, buat form booking sederhana dengan Laravel + MySQL; jangan paksakan backend kalau kebutuhan utama masih WhatsApp.
+3. Hitung status buka memakai zona waktu Asia/Jakarta.
+4. Tambahkan pengecekan otomatis: Lighthouse, axe, dan smoke test Playwright.
 
 ## Author
 
