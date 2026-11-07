@@ -1,16 +1,16 @@
 /* ==========================================================================
    Klinik Sehat Lestari
-   Satu file, tanpa dependency. Semua interaksi tetap jalan tanpa JS:
-   HTML sudah memuat jadwal lengkap; JS hanya menambah status "buka sekarang"
-   dan penyaringan tampilan.
+   Satu file, tanpa dependency. Navigasi, halaman layanan, dan jadwal mingguan
+   tetap terbaca tanpa JS. JS hanya menambah status "buka sekarang", jadwal
+   hari ini di beranda, menu mobile, dan akordeon.
    ========================================================================== */
 (function () {
   "use strict";
 
   /* ----------------------------------------------------------------------
-     Data jadwal (data demo — lihat README)
-     Sumber tunggal supaya kartu "Jadwal hari ini" dan status buka tidak
-     pernah berbeda dengan tabel di halaman kontak.
+     Data jadwal untuk kartu beranda dan status buka (data demo — lihat README).
+     Tabel jadwal mingguan di halaman layanan/kontak masih statis di HTML;
+     kalau jadwal berubah, samakan keduanya.
      ---------------------------------------------------------------------- */
   var HARI = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
@@ -116,7 +116,7 @@
     var daftar = kartuHariIni.querySelector("[data-today-list]");
     var catatan = kartuHariIni.querySelector("[data-today-foot]");
 
-    judul.textContent = "Jadwal " + HARI[hariIni].toLowerCase();
+    judul.textContent = "Jadwal " + HARI[hariIni];
 
     lencana.className = "status " + (status.buka ? "status--open" : "status--closed");
     lencana.innerHTML =
@@ -151,7 +151,7 @@
   var hariSekarang = new Date().getDay();
   document.querySelectorAll("[data-day]").forEach(function (el) {
     if (parseInt(el.getAttribute("data-day"), 10) === hariSekarang) {
-      el.classList.add(el.tagName === "TR" ? "is-today" : "is-today");
+      el.classList.add("is-today");
     }
   });
 
@@ -185,37 +185,7 @@
   }
 
   /* ----------------------------------------------------------------------
-     4. Tab (filter dokter & jadwal per poli)
-     ---------------------------------------------------------------------- */
-  document.querySelectorAll("[data-tabs]").forEach(function (grup) {
-    var tombol = grup.querySelectorAll('[role="tab"]');
-
-    function pilih(target) {
-      tombol.forEach(function (t) {
-        var aktif = t === target;
-        t.setAttribute("aria-selected", String(aktif));
-        t.tabIndex = aktif ? 0 : -1;
-        var panel = document.getElementById(t.getAttribute("aria-controls"));
-        if (panel) panel.hidden = !aktif;
-      });
-    }
-
-    tombol.forEach(function (t) {
-      t.addEventListener("click", function () { pilih(t); });
-      t.addEventListener("keydown", function (e) {
-        if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-        var daftar = Array.prototype.slice.call(tombol);
-        var i = daftar.indexOf(t);
-        var berikut = e.key === "ArrowRight" ? (i + 1) % daftar.length : (i - 1 + daftar.length) % daftar.length;
-        daftar[berikut].focus();
-        pilih(daftar[berikut]);
-        e.preventDefault();
-      });
-    });
-  });
-
-  /* ----------------------------------------------------------------------
-     5. Akordeon jadwal (tampilan mobile)
+     4. Akordeon jadwal (tampilan mobile)
      ---------------------------------------------------------------------- */
   document.querySelectorAll(".acc__btn").forEach(function (tombol) {
     tombol.addEventListener("click", function () {
